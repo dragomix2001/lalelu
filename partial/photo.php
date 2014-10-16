@@ -105,14 +105,11 @@
                     </a>
                 </div>
             </div>
-             <div class="row">
-        <?php
-            class Photo
-                {
-                    public $slika;
-                    public $album;
-                }
-            $array[] = new Photo;
+            <div class="container">
+             <div class="row vertical-center-row">
+                 <div class="col-lg-12">
+
+        <?php          
 
 
             $con=mysqli_connect("localhost","root","","lalalulu");
@@ -143,11 +140,11 @@
 
             foreach ($list as $category => $products) {
                 //echo '<input type="hidden" class="' . $category .'"';
-                echo '<div id="' . $category . '">';
+                echo '<div class="fotorama col-xs-4 col-xs-offset-4" id="' . $category . '">';
                 
                  if($result = mysqli_query($con,"SELECT photos.photo, albums.Name as album FROM photos join albums on photos.album_id = albums.ID WHERE album_id=" .$category )){
                       while($row = mysqli_fetch_array($result)) { 
-                echo '<a><img style="width:130px; height:115px;" src="data:image/jpeg;base64,' . base64_encode( $row['photo'] ) . '" /></a>';
+                echo '<img style="width:130px; height:115px;" src="data:image/jpeg;base64,' . base64_encode( $row['photo'] ) . '" />';
                // echo '<a href=' .base64_encode( $row['photo'] .' data-ngthumb="../img/1.jpg" data-ngdesc="Description1">Title Image1</a>';
     
                 }
@@ -161,32 +158,24 @@
 }
             mysqli_close($con);        
         ?>
-     
-    </div>
+     </div>
+        </div>
             </div>
+              </div>
 
             </header>    
 
      <!-- jQuery Version 1.11.0 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/jquery-2.0.3.min.js">\x3C/script>')</script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/css/nanogallery.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/jquery.nanogallery.min.js"></script>
-
+    <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/css/nanogallery.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/jquery.nanogallery.min.js"></script>-->
+    <link  href="http://fotorama.s3.amazonaws.com/4.6.2/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    <script src="http://fotorama.s3.amazonaws.com/4.6.2/fotorama.js"></script> <!-- 16 KB -->
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
    <!-- <script src="../js/aboutUs.js"></script>-->   
 
-   <script type="text/javascript">
-        $(document).ready(function () {
-        $("#nanoGallery3").nanoGallery();
-        });
-    </script>
-
-    <div id="nanoGallery3">
-        <a href="../img/1.jpg" data-ngthumb="../img/1.jpg" data-ngdesc="Description1">Title Image1</a>
-        <a href="../img/a1.jpg" data-ngthumb="../img/a1.jpg">Title Image2</a>
-    </div>     
-          
+    </script>           
     </body>
 </html>
