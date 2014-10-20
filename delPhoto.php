@@ -12,4 +12,7 @@
 
          }
          mysqli_close($con);
+
+         //$fh = fopen($_POST['path'], 'a');
+         unlink($_POST['path']);
 ?>

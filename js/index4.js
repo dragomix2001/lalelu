@@ -18,13 +18,15 @@ $(function () {
     
     $(".del").on("click", function () {
         var $this = $(this);
-        var $id = $this.attr('id');       
-
+        var $id = $this.attr('id'); 
+        var $path = $this.attr('path');      
+        //alert($path)
         $.ajax({
             url: "delPhoto.php",
             type: "POST",
             data: {
-                Id: $id
+                Id: $id,
+                path: $path
             },
             success: function (result) {
                 //alert(result); skini ovaj komentar ako te nekad pozovu ovi da ne radi brisanje
@@ -35,7 +37,7 @@ $(function () {
                     .row(target_row)
                     .remove()
                     .draw();
-                    alert("News was successfuly deleted.");
+                    alert("Photo was successfuly deleted.");
                 }
                 else {
 

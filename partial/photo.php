@@ -60,7 +60,7 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#"><?php echo($TEXT['home']); ?></a></li>
                 <li><a href="/partial/aboutUs.php"><?php echo($TEXT['aboutUs']); ?></a></li>
-                  <li><a href="#contact"><?php echo($TEXT['photo']); ?></a></li>
+                  <li><a href="/partial/photo.php"><?php echo($TEXT['photo']); ?></a></li>
                 <li><a href="partial/contact.html"><?php echo($TEXT['contacts']); ?></a></li>
                 
               </ul>
@@ -105,11 +105,14 @@
                     </a>
                 </div>
             </div>
-            <div class="container">
-             <div class="row vertical-center-row">
-                 <div class="col-lg-12">
-
-        <?php          
+             <div class="row">
+      <!--  <?php
+            class Photo
+                {
+                    public $slika;
+                    public $album;
+                }
+            $array[] = new Photo;
 
 
             $con=mysqli_connect("localhost","root","","lalalulu");
@@ -140,11 +143,11 @@
 
             foreach ($list as $category => $products) {
                 //echo '<input type="hidden" class="' . $category .'"';
-                echo '<div class="fotorama col-xs-4 col-xs-offset-4" id="' . $category . '">';
+                echo '<div id="' . $category . '">';
                 
                  if($result = mysqli_query($con,"SELECT photos.photo, albums.Name as album FROM photos join albums on photos.album_id = albums.ID WHERE album_id=" .$category )){
                       while($row = mysqli_fetch_array($result)) { 
-                echo '<img style="width:130px; height:115px;" src="data:image/jpeg;base64,' . base64_encode( $row['photo'] ) . '" />';
+                echo '<a><img style="width:130px; height:115px;" src="data:image/jpeg;base64,' . base64_encode( $row['photo'] ) . '" /></a>';
                // echo '<a href=' .base64_encode( $row['photo'] .' data-ngthumb="../img/1.jpg" data-ngdesc="Description1">Title Image1</a>';
     
                 }
@@ -157,25 +160,71 @@
 
 }
             mysqli_close($con);        
+        ?> -->
+                 <?php
+            $con=mysqli_connect("localhost","root","","lalalulu");
+        if(mysqli_connect_error())
+            echo mysqli_connect_error();
+         else{
+    
+           if($result = mysqli_query($con,"SELECT * FROM photos")){                      
+               echo "<div id='nanoGallery3'>";
+            while($row = mysqli_fetch_array($result)) {
+                $tmp =  $row['path'];  
+                $path = substr($tmp, 8);  
+                $name_tmp = substr($tmp, 16);   
+                $name = substr($name_tmp, 0, -4);         
+                //echo "<tr>";
+                //echo "<td>" . $row['Title'] . "</td>";
+                //echo "<td>" . $row['Content'] . "</td>";               
+                //echo "<td>" . $row['Date'] . "</td>";
+                if($row['photo']!=NULL)
+                //echo '<td style="width:200px"><img style="width:130px; height:115px;" src="data:image/jpeg;base64,' . base64_encode( $row['photo'] ) . '" /></td>';
+                   // echo "<td><i class=\"fa fa-camera\"></i></td>";
+                   echo "<a href=\"" . $path . "\" data-ngthumb=\"" . $path . "\" data-ngdesc=\"\">" . $name ."</a>";
+                else
+                    echo "<td><i class=\"fa fa-times\"></i></td>";
+                    //echo "<td>" . $row['path'] . "</td>";
+                //echo "<td><i path=" . $row['path'] . " class=\"fa fa-trash-o del\" id=". $row['Id'] ."></i></td>";
+                //echo "</tr>"; 
+                }
+
+                //echo "</tbody>";
+                //echo "</table>";
+                echo "</div>";
+
+                }
+                else
+                echo "No photo table!";
+            }
+            mysqli_close($con);        
         ?>
-     </div>
-        </div>
+    <!-- <div id="nanoGallery3">
+        <a href="../img/1.jpg" data-ngthumb="../img/1.jpg" data-ngdesc="Description1">Title Image1</a>
+        <a href="../img/a1.jpg" data-ngthumb="../img/a1.jpg">Title Image2</a>
+    </div>-->
+    </div>
             </div>
-              </div>
 
             </header>    
 
      <!-- jQuery Version 1.11.0 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/jquery-2.0.3.min.js">\x3C/script>')</script>
-    <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/css/nanogallery.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/jquery.nanogallery.min.js"></script>-->
-    <link  href="http://fotorama.s3.amazonaws.com/4.6.2/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
-    <script src="http://fotorama.s3.amazonaws.com/4.6.2/fotorama.js"></script> <!-- 16 KB -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/css/nanogallery.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.1.1/jquery.nanogallery.min.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
    <!-- <script src="../js/aboutUs.js"></script>-->   
 
-    </script>           
+   <script type="text/javascript">
+        $(document).ready(function () {
+        $("#nanoGallery3").nanoGallery();
+        });
+    </script>
+
+         
+          
     </body>
 </html>
